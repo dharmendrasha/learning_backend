@@ -1,36 +1,46 @@
-// const UserModel = require('../Model/User.model')
-
-const con = require('../database')
-
-const MysqlQuery = (query) => {
-    return new Promise((resolve, reject) => {
-        con.query(query, (err, result) => {
-            if(err){
-                reject(err)
-            }
-
-            resolve(result)
-        })
-    })
-}
+const UserModel = require('../Model/User.model')
 
 
 module.exports = {
     UserCreate: async (req, res) => {
-        // console.log(req)
-        // res.send(req.body)
-        console.log('1')
         const body = req.body
+        const user = new UserModel(body)
+        await user.save()
+        return res.send(user)
+    },
+    
+    UserFetch: async(req, res) => {
+        const user = await UserModel.find()
+        return res.send(user)
+    },
+    UserUpdate: async(req, res) => {
+        
+        let status = 200
+        let message = "record successfully update"
+        try{
 
-        // const user = new UserModel(body)
-        // await user.save()
+            const body = req.body
+            const id = body.id
+            const object = body.object
 
-        const query = `INSERT INTO 'user'('id', 'name', 'role) VALUES ('NULL','${body.name}','[${body.role}]')`
+            const user = await UserModel.findOne({_id: id})
+            if(user){
+                // update
+                await UserModel.updateOne({_id:id}, {...object})
 
-       const result = await MysqlQuery(query)
+            }else{
+                throw new Error('User not found')
+            }
 
-       console.log('3')
-        res.send('ghg')
+
+
+        }catch(error){
+            status = 404
+            message = error.message
+        }
+
+        return res.status(status).send(message)
+
 
     }
 }

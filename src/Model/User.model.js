@@ -1,6 +1,16 @@
-// const bookshelf = require('../database')
-// const User = bookshelf.model('User', {
-//     tablename: 'User'
-// })
+const {Schema, model} = require('mongoose')
 
-// module.exports = User
+const UserSchema = new Schema({
+
+    name:{
+        type: Schema.Types.String,
+        required: true
+    },
+    role:{
+        type: Schema.Types.String,
+        required: true
+    }
+
+}, {timestamps: false})
+
+module.exports = model('user', UserSchema)

@@ -10,7 +10,7 @@ routes.get('/', (req, res) => {
 })
 
 routes.post('/user/create', UserController.UserCreate)
-
-
+routes.get('/user/fetch', UserController.UserFetch)
+routes.post('/user/update', UserController.UserUpdate)
 
 module.exports = routes
