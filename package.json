@@ -13,7 +13,7 @@
     "express": "^4.17.1",
     "express-form-data": "^2.0.17",
     "knex": "^0.95.11",
-    "mongoose": "^6.0.11",
+    "mongoose": "^6.4.6",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
